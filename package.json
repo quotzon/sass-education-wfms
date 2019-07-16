@@ -9,23 +9,28 @@
   "author": "quotzon",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-sass": "^4.0.2",
-    "smart-grid": "^2.1.2",
     "browser-sync": "^2.26.7",
     "del": "^5.0.0",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
     "gulp-cache": "^1.1.2",
     "gulp-clean-css": "^4.2.0",
     "gulp-concat": "^2.6.1",
+    "gulp-if": "^2.0.2",
     "gulp-imagemin": "^6.0.0",
     "gulp-notify": "^3.2.0",
     "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-uglifyjs": "^0.6.2",
-    "imagemin-pngquant": "^8.0.0"
+    "imagemin-pngquant": "^8.0.0",
+    "smart-grid": "^2.1.2"
   },
   "dependencies": {
     "jquery": "^3.4.1",
     "normalize.css": "^8.0.1"
+    "browserslist": [
+      'last 15 versions'
+    ]
   }
 }

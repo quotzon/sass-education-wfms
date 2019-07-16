@@ -13,6 +13,8 @@ var gulp = require('gulp'), // Подключаем Gulp
     pngquant = require('imagemin-pngquant'), // Подключаем библиотеку для работы с png
     cache = require('gulp-cache'), // Подключаем библиотеку кеширования
     autoprefixer = require('gulp-autoprefixer'), // Подключаем библиотеку для автоматического добавления префиксов
+    gulpIf = require('gulp-if'),
+    sourcemaps = require('gulp-sourcemaps'),
     smartgrid = require('smart-grid');
 
 var jsFiles = [
@@ -35,6 +37,8 @@ var buildFiles = [
         './src/*.html'
 ];
 
+var isDevelope = true;
+
 /* It's principal settings in smart grid project */
 var settings = {
     outputStyle: 'scss', /* less || scss || sass || styl */
@@ -43,7 +47,7 @@ var settings = {
     mobileFirst: false, /* mobileFirst ? 'min-width' : 'max-width' */
     container: {
         maxWidth: '1200px', /* max-width оn very large screen */
-        fields: '30px' /* side fields */
+        fields: '0' /* side fields */
     },
     breakPoints: {
         lg: {
@@ -76,22 +80,24 @@ smartgrid('./src/sass', settings);
 
 function sasstocss(){
     return gulp.src(sassFiles)
-	.pipe(sass({ outputStyle: 'expanded' }).on("error", notify.onError()))
-	.pipe(gulp.dest('./src/css'));
+    .pipe(sourcemaps.init())
+    .pipe(sass({ outputStyle: 'expanded' }).on("error", notify.onError()))
+    .pipe(autoprefixer({
+        cascade: false
+    }))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./src/css'))
+    .pipe(browserSync.stream());
 }
 
 function styles(){
     return gulp.src(cssFiles)
     .pipe(concat('styles.min.css'))
-    .pipe(autoprefixer({
-        browsers: ['last 15 versions'],
-        cascade: false
-    }))
     .pipe(cleanCSS({
         level: 2
     }))
-    .pipe(gulp.dest('./src/css'))
-    .pipe(browserSync.stream());
+    .pipe(gulp.dest('./src/css'));
+    //.pipe(browserSync.stream());
 }
 
 function scripts(){
